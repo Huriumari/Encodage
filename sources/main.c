@@ -12,9 +12,6 @@ int main(int argc,char **argv)
     pathMatrix = malloc(sizeof(char) * 249);
     pathFile = malloc(sizeof(char) * 249);
 
-    pathMatrix[248] = '\0';
-    pathFile[248] = '\0';
-
     printf("/crypt pour chiffrer\n/decrypt pour déchiffrer\n/key pour changer la clé\n/select pour sélectionner l'objet sur lequel effectuer le traitement\n/exit pour quitter\n\nCOMMAND :\n");
 
     do{
@@ -24,21 +21,26 @@ int main(int argc,char **argv)
         if(command[strlen(command) - 1] == '\n')
             command[strlen(command) - 1] = '\0';
 
-        if(strcmp(command, "/crypt") == 0 && pathMatrix[0] != 0 && pathFile[0] != 0){
-            //conction crypt
+        if(strcmp(command, "/crypt") == 0 && pathMatrix != NULL && pathFile != NULL){
+            //fonction crypt
         }
         
-        else if(strcmp(command, "/decrypt") == 0 && pathMatrix[0] != 0 && pathFile[0] != 0){
+        else if(strcmp(command, "/decrypt") == 0 && pathMatrix != NULL && pathFile != NULL){
             //fonction decrypt
         }
 
         else if(strcmp(command, "/key") == 0){
-            printf("%s\n", openDialogWindow(pathMatrix));
-            
+            pathMatrix = openDialogWindow();
+            if(pathMatrix != NULL){
+                printf("%s\n", pathMatrix);
+            }
         }
 
         else if(strcmp(command, "/select") == 0){
-            printf("%s\n", openDialogWindow(pathFile));
+            pathFile = openDialogWindow();
+            if(pathFile != NULL){
+                printf("%s\n", pathFile);
+            }
         }
 
     }while(strcmp(command, "/exit"));
