@@ -2,49 +2,55 @@
 
 int main(int argc,char **argv)
 {
+    GtkWidget *window;
+    GtkWidget *hBox;
+    GtkWidget *buttonVBox;
+    GtkWidget *encryptBtn;
+    GtkWidget *decryptBtn;
+    GtkWidget *selectBtn;
+    GtkWidget *keyBtn;
+
+    path_t *path = malloc(sizeof(path_t));
     char command[25];
-    char *pathMatrix;
-    char *pathFile;
+    path->pathMatrix = NULL;
+    path->pathFile = NULL;
     int *matrix;
 
     gtk_init(&argc, &argv);
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "LogicSimButInC");
+    gtk_window_set_default_size(GTK_WINDOW(window), 400, 200);
+	gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
+	g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-    pathMatrix = malloc(sizeof(char) * 249);
-    pathFile = malloc(sizeof(char) * 249);
+    hBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_container_add(GTK_CONTAINER(window), hBox);
 
-    pathMatrix[248] = '\0';
-    pathFile[248] = '\0';
+    buttonVBox = gtk_button_box_new(GTK_ORIENTATION_VERTICAL);
+    gtk_button_box_set_layout(GTK_BUTTON_BOX(buttonVBox), GTK_BUTTONBOX_END);
+    gtk_box_pack_end(GTK_BOX(hBox), buttonVBox, TRUE, TRUE, 10);
 
-    printf("/crypt pour chiffrer\n/decrypt pour déchiffrer\n/key pour changer la clé\n/select pour sélectionner l'objet sur lequel effectuer le traitement\n/exit pour quitter\n\nCOMMAND :\n");
+    encryptBtn = gtk_button_new_with_label("Encrypt");
+    gtk_container_add(GTK_CONTAINER(buttonVBox), encryptBtn);
 
-    do{
+    decryptBtn = gtk_button_new_with_label("Decrypt");
+    gtk_container_add(GTK_CONTAINER(buttonVBox), decryptBtn);
+    
+    selectBtn = gtk_button_new_with_label("Select File");
+    gtk_container_add(GTK_CONTAINER(buttonVBox), selectBtn);
 
-        fgets(command, 25, stdin);
-        
-        if(command[strlen(command) - 1] == '\n')
-            command[strlen(command) - 1] = '\0';
+    keyBtn = gtk_button_new_with_label("Select key");
+    gtk_container_add(GTK_CONTAINER(buttonVBox), keyBtn);
 
-        if(strcmp(command, "/crypt") == 0 && pathMatrix[0] != 0 && pathFile[0] != 0){
-            //conction crypt
-        }
-        
-        else if(strcmp(command, "/decrypt") == 0 && pathMatrix[0] != 0 && pathFile[0] != 0){
-            //fonction decrypt
-        }
+    g_signal_connect(G_OBJECT(encryptBtn), "activate", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(G_OBJECT(decryptBtn), "activate", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(G_OBJECT(selectBtn), "activate", G_CALLBACK(openFileDialogWindow), path);
+    g_signal_connect(G_OBJECT(keyBtn), "activate", G_CALLBACK(openKeyDialogWindow), path);
 
-        else if(strcmp(command, "/key") == 0){
-            printf("%s\n", openDialogWindow(pathMatrix));
-            
-        }
 
-        else if(strcmp(command, "/select") == 0){
-            printf("%s\n", openDialogWindow(pathFile));
-        }
-
-    }while(strcmp(command, "/exit"));
-
-    free(pathMatrix);
-    free(pathFile);
+    free(path);
+    gtk_widget_show_all(window);
+    gtk_main();
     return 0;
 
 }

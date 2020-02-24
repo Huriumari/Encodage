@@ -20,7 +20,12 @@ typedef struct	s_matrice{
 typedef struct s_agument{
 	char *file;
 	t_matrice matrice;
-}				t_argument;		;
+}				t_argument;
+
+typedef struct path_s{
+	char *pathMatrix;
+	char *pathFile;
+}path_t;
 
 char	**parse_file(char *file);
 int        *convert_matrice(char *file);
@@ -36,7 +41,8 @@ void    selectFile(t_argument *argument);
 int     f_encode_call(char *file, int *matrice);
 int     f_decode_call(char *file, int *matrice);
 void	print_matrice(int *matrice);
-char	*openDialogWindow(char *path);
+void	openFileDialogWindow(path_t *path);
+void	openKeyDialogWindow(path_t *path);
 
 
 
