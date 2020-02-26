@@ -41,7 +41,7 @@ void    selectFile(t_argument *argument);
 int     f_encode_call(char *file, int *matrice);
 int     f_decode_call(char *file, int *matrice);
 void	print_matrice(int *matrice);
-void	openFileDialogWindow(path_t *path);
+void	openFileDialogWindow(GtkWidget *widget, path_t *path);
 void	openKeyDialogWindow(path_t *path);
 
 
