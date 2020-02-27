@@ -149,18 +149,18 @@ char    **f_create_array(){
     return array;
 }
 
-void    print_da_wae(char **array_da_wae){
+void    print_instruct(char **array_instruct){
     int i,j;
 
     for (i = 0 ; i < 4 ; i++){
         for (j = 0 ; j < 6 ; j++){
-            printf("%d", (int)array_da_wae[i][j]);
+            printf("%d", (int)array_instruct[i][j]);
         }
         printf("\n");
     }
 }
 
-char    **f_find_da_wae_in_matrice(int *matrice){
+char    **f_find_instruct_in_matrice(int *matrice){
     int     mask_i;
     int     count;
     int     i;
@@ -187,7 +187,7 @@ char    **f_find_da_wae_in_matrice(int *matrice){
 }
 
 
-int f_decode(char *buffer_read, char *buffer_write, int size, char **array_de_wae){
+int f_decode(char *buffer_read, char *buffer_write, int size, char **array_instruct){
     int     i;
     int     mask_write;
     int     pos_write;
@@ -197,12 +197,12 @@ int f_decode(char *buffer_read, char *buffer_write, int size, char **array_de_wa
     for (pos_write = 0 ; pos_read < size ; pos_write++){
         buffer_write[pos_write] = 0;
         for (i = 0 ; i < 4 ; i++){
-            if (buffer_read[pos_read] & array_de_wae[i][1])
+            if (buffer_read[pos_read] & array_instruct[i][1])
                 buffer_write[pos_write] += (1 << (7 - i));
         }
         pos_read++;
         for (i = 0 ; i < 4 ; i++){
-            if (buffer_read[pos_read] & array_de_wae[i][1])
+            if (buffer_read[pos_read] & array_instruct[i][1])
                 buffer_write[pos_write] += (1 << (3 - i));
         }
         pos_read++;
@@ -216,7 +216,7 @@ int     f_decode_call(char *file, int *matrice){
     FILE        *fd_write;
     char        buffer_write[SIZE_MAX_WRITE];
     size_t      size;
-    char        **array_de_wae;
+    char        **array_instruct;
     int         pos;
 
     fd_read = fopen(file, "rb+");
@@ -234,15 +234,12 @@ int     f_decode_call(char *file, int *matrice){
         return 0;
     }
     fchmod(fileno(fd_read), S_IXUSR | S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
-    array_de_wae = f_find_da_wae_in_matrice(matrice);
-    print_da_wae(array_de_wae);
-    printf("\n");
-    print_matrice(matrice);
+    array_instruct = f_find_instruct_in_matrice(matrice);
     while (42){
         size = fread(buffer_read, sizeof(char), SIZE_MAX - 1, fd_read);
         if (size == 0)
             break;
-        pos = f_decode(buffer_read, buffer_write, (int)size, array_de_wae);
+        pos = f_decode(buffer_read, buffer_write, (int)size, array_instruct);
         fwrite(buffer_write, sizeof(char), pos, fd_write);
     }
     fclose(fd_read);

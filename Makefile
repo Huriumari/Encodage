@@ -12,7 +12,6 @@ all: $(NAME)
 
 $(NAME):
 	gcc-8 $(FLAG() -I $(HEADER) $(SRC) -o $(NAME) $(LIB)
-	cp $(NAME) ../test
 
 clean:
 	rm -f $(OBJ)

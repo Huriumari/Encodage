@@ -19,15 +19,13 @@ void openFileDialogWindow(GtkWidget* widget, path_t *path){
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
     filename = gtk_file_chooser_get_filename (chooser);
     path->pathFile = filename;
-    g_free(filename);
-
   }
   
   gtk_widget_destroy(dialog);
 
 }
 
-void openKeyDialogWindow(path_t *path){
+void openKeyDialogWindow(GtkWidget* widget, path_t *path){
 
   GtkWidget *dialog;
   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
@@ -43,10 +41,7 @@ void openKeyDialogWindow(path_t *path){
     GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
     filename = gtk_file_chooser_get_filename (chooser);
     path->pathMatrix = filename;
-    g_free(filename);
-
   }
-  
   gtk_widget_destroy(dialog);
 
 }

@@ -42,13 +42,11 @@ int main(int argc,char **argv)
     keyBtn = gtk_button_new_with_label("Select key");
     gtk_container_add(GTK_CONTAINER(buttonVBox), keyBtn);
 
-    g_signal_connect(G_OBJECT(encryptBtn), "clicked", G_CALLBACK(gtk_main_quit), path);
-    g_signal_connect(G_OBJECT(decryptBtn), "clicked", G_CALLBACK(gtk_main_quit), path);
+    g_signal_connect(G_OBJECT(encryptBtn), "clicked", G_CALLBACK(signal_encrypt), path);
+    g_signal_connect(G_OBJECT(decryptBtn), "clicked", G_CALLBACK(signal_decrypt), path);
     g_signal_connect(G_OBJECT(selectBtn), "clicked", G_CALLBACK(openFileDialogWindow), path);
     g_signal_connect(G_OBJECT(keyBtn), "clicked", G_CALLBACK(openKeyDialogWindow), path);
 
-
-    free(path);
     gtk_widget_show_all(window);
     gtk_main();
     return 0;

@@ -25,7 +25,7 @@ typedef struct s_agument{
 typedef struct path_s{
 	char *pathMatrix;
 	char *pathFile;
-}path_t;
+}				path_t;
 
 char	**parse_file(char *file);
 int        *convert_matrice(char *file);
@@ -42,7 +42,9 @@ int     f_encode_call(char *file, int *matrice);
 int     f_decode_call(char *file, int *matrice);
 void	print_matrice(int *matrice);
 void	openFileDialogWindow(GtkWidget *widget, path_t *path);
-void	openKeyDialogWindow(path_t *path);
+void	openKeyDialogWindow(GtkWidget* widget, path_t *path);
+void    signal_decrypt(GtkWidget *keyBtn, path_t *path);
+void    signal_encrypt(GtkWidget *keyBtn, path_t *path);
 
 
 
