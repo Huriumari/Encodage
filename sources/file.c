@@ -1,7 +1,5 @@
 #include "project.h"
 
-
-
 char    *convert_file(char **array, int *width){
     char    *result;
     int        i,j,k;
